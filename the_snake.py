@@ -37,10 +37,8 @@ class GameObject:
     def draw_cell(self, surface, position, color):
         """Рисует одну клетку заданного цвета."""
         pygame.draw.rect(
-            surface,
-            color,
-            pygame.Rect(position, (GRID_SIZE, GRID_SIZE))
-        )
+            surface, color, pygame.Rect(
+                position, (GRID_SIZE, GRID_SIZE)))
 
     def move(self):
         """Двигает объект (переопределяется в наследниках)."""
@@ -73,7 +71,6 @@ class Snake(GameObject):
     def move(self) -> None:
         """Сдвигает змейку на одну клетку со сквозным проходом краёв."""
         head_x, head_y = self.get_head_position()
-       # self.direction = RIGHT
         dx, dy = self.direction
         new_x = (head_x + dx * GRID_SIZE) % SCREEN_WIDTH
         new_y = (head_y + dy * GRID_SIZE) % SCREEN_HEIGHT
@@ -92,9 +89,12 @@ class Snake(GameObject):
     def reset(self):
         """Сбрасывает змейку в центр поля."""
         self.length = 1
-        self.positions = [(
-            SCREEN_CENTER_X // GRID_SIZE * GRID_SIZE,
-            SCREEN_CENTER_Y // GRID_SIZE * GRID_SIZE)]
+        self.positions = [
+            (
+                SCREEN_CENTER_X // GRID_SIZE * GRID_SIZE,
+                SCREEN_CENTER_Y // GRID_SIZE * GRID_SIZE,
+            )
+        ]
         self.direction = choice([RIGHT, LEFT, UP, DOWN])
         self.next_direction = None
         self.last = None
@@ -129,9 +129,12 @@ def draw_board_border(surface):
     pygame.draw.rect(
         surface,
         BORDER_COLOR,
-        pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT),
-        width=4
-    )
+        pygame.Rect(
+            0,
+            0,
+            SCREEN_WIDTH,
+            SCREEN_HEIGHT),
+        width=4)
 
 
 def handle_keys(snake):
@@ -171,8 +174,7 @@ def main():
         handle_keys(snake)
         snake.update_direction()
         snake.move()
-        head_position = snake.get_head_position()   
-
+        head_position = snake.get_head_position()
         if head_position == apple.position:
             snake.length += 1
             apple.randomize_position(snake.positions)
@@ -181,15 +183,15 @@ def main():
 
         snake.draw(screen)
         apple.draw(screen)
-        speed_text = font.render(f'S: {snake.speed}', True, (FONT_COLOR))
-        text = font.render(f'L: {snake.length}', True, (FONT_COLOR))
+        speed_text = font.render(f"S: {snake.speed}", True, (FONT_COLOR))
+        text = font.render(f"L: {snake.length}", True, (FONT_COLOR))
         screen.blit(speed_text, (10, 10))
-        text = font.render(f'L: {snake.length}', True, (FONT_COLOR))
+        text = font.render(f"L: {snake.length}", True, (FONT_COLOR))
         screen.blit(text, (10, 20))
         draw_board_border(screen)
         pygame.display.update()
         clock.tick(snake.speed)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
