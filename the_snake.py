@@ -183,10 +183,10 @@ def main():
 
         snake.draw(screen)
         apple.draw(screen)
-        speed_text = font.render(f"S: {snake.speed}", True, (FONT_COLOR))
-        text = font.render(f"L: {snake.length}", True, (FONT_COLOR))
+        speed_text = font.render(f'S: {snake.speed}', True, (FONT_COLOR))
+        text = font.render(f'L: {snake.length}', True, (FONT_COLOR))
         screen.blit(speed_text, (10, 10))
-        text = font.render(f"L: {snake.length}", True, (FONT_COLOR))
+        text = font.render(f'L: {snake.length}', True, (FONT_COLOR))
         screen.blit(text, (10, 20))
         draw_board_border(screen)
         pygame.display.update()
